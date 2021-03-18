@@ -123,9 +123,9 @@ set_target_properties(DisruptorShared PROPERTIES SOVERSION ${DISRUPTOR_VERSION_M
 add_library(DisruptorStatic STATIC ${Disruptor_sources})
 set_target_properties(DisruptorStatic PROPERTIES OUTPUT_NAME Disruptor)
 
-install(FILES ${Disruptor_headers} DESTINATION include/Disruptor)
+install(FILES ${Disruptor_headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/Disruptor)
 
 install(TARGETS DisruptorShared DisruptorStatic
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 )
