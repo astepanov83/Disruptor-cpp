@@ -2,6 +2,8 @@ project(Disruptor)
 cmake_minimum_required(VERSION 2.6)
 
 option(DISRUPTOR_BUILD_TESTS "Build tests" OFF)
+option(DISRUPTOR_BUILD_SHARED "Build shared library" OFF)
+option(DISRUPTOR_BUILD_STATIC "Build static library" ON)
 
 set(DISRUPTOR_VERSION_MAJOR "1")
 set(DISRUPTOR_VERSION_MINOR "0")

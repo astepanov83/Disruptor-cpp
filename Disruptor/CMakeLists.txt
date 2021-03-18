@@ -114,18 +114,25 @@ set(Disruptor_headers
     YieldingWaitStrategy.h
 )
 
-add_library(DisruptorShared SHARED ${Disruptor_sources})
-target_link_libraries(DisruptorShared ${Boost_LIBRARIES})
-set_target_properties(DisruptorShared PROPERTIES OUTPUT_NAME Disruptor)
-set_target_properties(DisruptorShared PROPERTIES VERSION ${DISRUPTOR_VERSION})
-set_target_properties(DisruptorShared PROPERTIES SOVERSION ${DISRUPTOR_VERSION_MAJOR})
+if (DISRUPTOR_BUILD_SHARED)
+    add_library(DisruptorShared SHARED ${Disruptor_sources})
+    target_link_libraries(DisruptorShared ${Boost_LIBRARIES})
+    set_target_properties(DisruptorShared PROPERTIES OUTPUT_NAME Disruptor)
+    set_target_properties(DisruptorShared PROPERTIES VERSION ${DISRUPTOR_VERSION})
+    set_target_properties(DisruptorShared PROPERTIES SOVERSION ${DISRUPTOR_VERSION_MAJOR})
 
-add_library(DisruptorStatic STATIC ${Disruptor_sources})
-set_target_properties(DisruptorStatic PROPERTIES OUTPUT_NAME Disruptor)
+    install(TARGETS DisruptorShared
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    )
+endif()
+
+if (DISRUPTOR_BUILD_STATIC)
+    add_library(DisruptorStatic STATIC ${Disruptor_sources})
+    set_target_properties(DisruptorStatic PROPERTIES OUTPUT_NAME Disruptor)
+
+    install(TARGETS DisruptorStatic
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+    )
+endif()
 
 install(FILES ${Disruptor_headers} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/Disruptor)
-
-install(TARGETS DisruptorShared DisruptorStatic
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-)
