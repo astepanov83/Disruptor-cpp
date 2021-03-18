@@ -1,12 +1,12 @@
 project(Disruptor)
 cmake_minimum_required(VERSION 2.6)
 
+option(DISRUPTOR_BUILD_TESTS "Build tests" OFF)
+
 set(DISRUPTOR_VERSION_MAJOR "1")
 set(DISRUPTOR_VERSION_MINOR "0")
 set(DISRUPTOR_VERSION_PATCH "0")
 set(DISRUPTOR_VERSION "${DISRUPTOR_VERSION_MAJOR}.${DISRUPTOR_VERSION_MINOR}.${DISRUPTOR_VERSION_PATCH}")
-
-enable_testing()
 
 # enable gcc specific stuff
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -46,6 +46,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS} ${WARNING_FLAGS}")
 add_subdirectory(Disruptor)
 
 if(DISRUPTOR_BUILD_TESTS)
+    enable_testing()
+
     add_subdirectory(googletest-release-1.8.0)
     include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
